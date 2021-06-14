@@ -1,15 +1,14 @@
-# Docker help for {{bot}}
+# Docker help for dadbot2k
 
-You have multiple options to run an instance of {{bot}} using docker.
+You have multiple ways to use docker to run an instance of dadbot2k.
 
-- [Docker help for {{bot}}](#docker-help-for-bot)
+- [Docker help for dadbot2k](#docker-help-for-dadbot2k)
+  - [Using docker-compose and the prebuilt-image (recommended)](#using-docker-compose-and-the-prebuilt-image-recommended)
   - [Using docker-compose and building the image](#using-docker-compose-and-building-the-image)
   - [Using pure docker](#using-pure-docker)
     - [[Optional] Building the image](#optional-building-the-image)
     - [Creating the container](#creating-the-container)
 
-
-<!-- !! ONLY include this part if you provide a prebuilt image !!
 
 ## Using docker-compose and the prebuilt-image (recommended)
 
@@ -23,8 +22,8 @@ This is the easiest method for running the bot without any modifications.
     ```yaml
     version: '3'
     services:
-      {{bot}}:
-        image: "{{user}}/{{image}}:latest"
+      dadbot2k:
+        image: "ghcr.io/0x5c/minibot:latest"
         restart: on-failure
         volumes:
           - "./data:/app/data:rw"
@@ -43,8 +42,8 @@ This is the easiest method for running the bot without any modifications.
     $ docker-compose up -d
     ```
 
-    > Run without "-d" to test the bot. (run in foreground)
--->
+    *Run without "-d" to test the bot (run in foreground).*
+
 
 
 ## Using docker-compose and building the image
@@ -58,9 +57,9 @@ This is the easiest method to run the bot with modifications.
     ```yaml
     version: '3'
     services:
-      {{bot}}:
+      dadbot2k:
         build: .
-        image: "{{image}}:local-latest"
+        image: "dadbot2k:local-latest"
         restart: on-failure
         volumes:
           - "./data:/app/data:rw"
@@ -76,10 +75,10 @@ This is the easiest method to run the bot with modifications.
 
     ```none
     $ docker-compose build --pull
-    $ docker-compose -d
+    $ docker-compose up -d
     ```
 
-    > Run without "-d" to test the bot. (run in foreground)
+    *Run without "-d" to test the bot (run in foreground).*
 
 
 
@@ -96,7 +95,7 @@ This methods is not very nice to use.
 2. Run docker build:
 
     ```none
-    $ docker build -t {{image}}:local-latest .
+    $ docker build -t dadbot2k:local-latest .
     ```
 
 
@@ -107,11 +106,9 @@ This methods is not very nice to use.
 2. Run the container:
 
     ```none
-    $ docker run -d --rm --mount type=bind,src=$(pwd)/data,dst=/app/data --name {{bot}} [image]
+    $ docker run -d --rm --mount type=bind,src=$(pwd)/data,dst=/app/data --name dadbot2k [image]
     ```
 
     Where `[image]` is either of:
-    - `{{image}}:local-latest` if you are building your own.
-<!-- !! ONLY include this part if you provide a prebuilt image !!
-    - `{{user}}/{{image}}:latest` if you want to use the prebuilt image.
--->
+    - `dadbot2k:local-latest` if you are building your own.
+    - `docker.pkg.github.com/miaowware/dadbot2k/dadbot2k:latest` if you want to use the prebuilt image.
