@@ -39,7 +39,7 @@ bot = commands.Bot(
 class ChanceManager:
     def __init__(self, path: Path):
         self._path = path / "risk.json"
-        self._chance: dict[Optional[int], float] = {}
+        self._chance: dict[str, float] = {}
         self.__load()
 
     def __load(self):
@@ -59,12 +59,12 @@ class ChanceManager:
     def get(self, guild: Optional[int]) -> float:
         if not guild:
             return opt.default_chance
-        return self._chance.get(guild, opt.default_chance)
+        return self._chance.get(str(guild), opt.default_chance)
 
     def set(self, guild: int, value: float):
         if not (0 <= value <= 1):
             raise ValueError("Chance must be a value between 0 and 1")
-        self._chance[guild] = value
+        self._chance[str(guild)] = value
         self.__dump()
 
 

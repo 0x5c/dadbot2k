@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Switched to pycord.
 - Changed the default command prefix in the template to handle mobile keybord capitalisation.
+### Fixed
+- Bug with JSON dumping of chance data.
 
 
 ## [1.0.0] - 2021-06-14
