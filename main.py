@@ -23,6 +23,7 @@ import data.options as opt
 intents = discord.Intents.none()
 intents.guilds = True
 intents.messages = True
+intents.message_content = True
 
 
 bot = commands.Bot(
@@ -72,8 +73,8 @@ joke_chance = ChanceManager(Path(opt.chance_dir))
 joke_prefix = r"(?:i(?:['`´]| a)?|a)m "
 
 
-@bot.command()
-@commands.check_any(commands.has_permissions(administrator=True), commands.is_owner())
+@bot.command()  # type: ignore
+@commands.check_any(commands.has_permissions(administrator=True), commands.is_owner())  # type: ignore
 @commands.guild_only()
 async def chance(ctx: commands.Context, risk: Optional[float]):
     """Sets or display the dadjoking risk."""
@@ -88,7 +89,7 @@ async def chance(ctx: commands.Context, risk: Optional[float]):
         await ctx.send(f"⚠️  **Error!** {e}.")
 
 
-@bot.event
+@bot.listen("on_message")
 async def on_message(msg: discord.Message):
     if msg.author.bot:
         return
@@ -102,7 +103,6 @@ async def on_message(msg: discord.Message):
             print(f"* Gottem! in {guild} [{guild.id}]")
         else:
             print(f"* Gottem in DMs??? {msg.channel} [{msg.channel.id}]")
-    await bot.process_commands(msg)
 
 
 @bot.event
