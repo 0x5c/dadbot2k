@@ -15,7 +15,7 @@ Settings and options for the bot.
 
 
 # The prefix for the bot. Define a list of strings for multiple prefixes. ie: `["?", "!", "pls "]`
-command_prefix = "dadctl "
+command_prefix = ["dadctl ", "Dadctl "]
 
 # The direcotry for chance settings. Best left as-is.
 chance_dir = "./data"
