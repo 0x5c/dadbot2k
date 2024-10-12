@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - Ability to load Discord token and bot config via env vars.
+- Default chance number to output of `chance` command.
 ### Changed
 - Switched to pycord.
 - Changed the default command prefix in the template to handle mobile keybord capitalisation.

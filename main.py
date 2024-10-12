@@ -101,7 +101,9 @@ async def chance(ctx: commands.Context, risk: Optional[float]):
     """Sets or display the dadjoking risk."""
     gid = ctx.guild.id
     if risk is None:
-        await ctx.send(f"ℹ️  Current risk of dadjoking is `~{joke_chance.get(gid):.2%}`.")
+        reply = (f"ℹ️  Current local risk of dadjoking is `~{joke_chance.get(gid):.2%}`.\n"
+                 f"-# Default risk is `~{default_chance}`.")
+        await ctx.send(reply)
         return
     try:
         joke_chance.set(gid, risk)
