@@ -10,6 +10,8 @@ jobs:
   release:
     name: Create Release
     runs-on: ubuntu-20.04
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -22,8 +24,10 @@ jobs:
         run: |
           SUBJECT=$(/usr/bin/git tag -l ${GITHUB_REF#refs/tags/} --format='%(subject)')
           BODY=$(/usr/bin/git tag -l ${GITHUB_REF#refs/tags/} --format='%(body)' | sed '/-----BEGIN PGP SIGNATURE-----/,$d')
+
           echo "SUBJECT=$SUBJECT"
           echo "BODY=$BODY"
+
           echo 'tag_subject<<EOS' >> $GITHUB_ENV
           echo "$SUBJECT" >> $GITHUB_ENV
           echo 'EOS' >> $GITHUB_ENV
@@ -32,6 +36,7 @@ jobs:
           echo 'EOB' >> $GITHUB_ENV
           echo "tag_version=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
           echo "version_num=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
       - name: Get Changelog Content
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v2
@@ -41,15 +46,15 @@ jobs:
 
       - name: Publish Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ env.tag_version }}
-          release_name: ${{ env.tag_subject }}
+          tag: ${{ env.tag_version }}
+          name: ${{ env.tag_subject }}
           body: |
             ${{ env.tag_body }}
+
             ## Changelog
+
             ${{ steps.changelog_reader.outputs.changes }}
           draft: false
           prerelease: false
