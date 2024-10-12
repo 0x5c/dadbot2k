@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 
 ## [Unreleased]
+
+
+## [1.1.0] - 2024-10-12
 ### Added
 - Ability to load Discord token and bot config via env vars.
 - Default chance number to output of `chance` command.
@@ -20,5 +23,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - The full bot. With probabilistic dadjoking and per-server runtime configurable chance.
 
 
-[Unreleased]: https://github.com/0x5c/dadbot2k/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/0x5c/dadbot2k/compare/v1.1.0...HEAD
+[v1.1.0]: https://github.com/0x5c/dadbot2k/releases/tag/v1.1.0
 [v1.0.0]: https://github.com/0x5c/dadbot2k/releases/tag/v1.0.0
