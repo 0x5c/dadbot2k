@@ -2,7 +2,7 @@
 DadBot2000
 ---
 
-Copyright (c) 2021 0x5c
+Copyright (c) 2021-2024 0x5c
 Released under the terms of the BSD 3-Clause Licence
 """
 

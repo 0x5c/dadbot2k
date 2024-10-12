@@ -54,7 +54,7 @@ Skip the boilerplate, Get straight to coding: [try it for yourself!](https://git
 
 ## License
 
-Copyright (c) 2021 0x5c
+Copyright (c) 2021-2024 0x5c
 
 Released under the terms of the BSD 3-Clause Licence.  
 See [`LICENCE`](LICENCE) for the full license text.
