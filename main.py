@@ -8,6 +8,7 @@ Released under the terms of the BSD 3-Clause Licence
 
 
 import json
+import os
 import random
 import re
 from pathlib import Path
@@ -16,9 +17,29 @@ from typing import Optional
 import discord
 from discord.ext import commands
 
-import data.keys as keys
-import data.options as opt
 
+discord_token = os.environ.get("DADBOT_DISCORD_TOKEN", None)
+if discord_token:
+    print("> Loading secrets from environment")
+else:
+    print("> Loading secrets from file")
+    import data.keys  # type: ignore
+    discord_token = data.keys.discord_token
+
+env_pfx = os.environ.get("DADBOT_COMMAND_PREFIX", None)
+env_cdir = os.environ.get("DADBOT_CHANCE_DIR", None)
+env_def = os.environ.get("DADBOT_DEFAULT_CHANCE", None)
+if env_pfx and env_cdir and env_def:
+    print("> Loading options from environment")
+    command_prefix = env_pfx.split(":")
+    chance_dir = env_cdir
+    default_chance = float(env_def)
+else:
+    print("> Loading options from file")
+    import data.options  # type: ignore
+    command_prefix = data.options.command_prefix  # type: ignore
+    chance_dir = data.options.chance_dir
+    default_chance = data.options.default_chance
 
 intents = discord.Intents.none()
 intents.guilds = True
@@ -27,7 +48,7 @@ intents.message_content = True
 
 
 bot = commands.Bot(
-    command_prefix=opt.command_prefix,
+    command_prefix=command_prefix,
     case_insensitive=True,
     help_command=None,
     allowed_mentions=discord.AllowedMentions().none(),
@@ -58,8 +79,8 @@ class ChanceManager:
 
     def get(self, guild: Optional[int]) -> float:
         if not guild:
-            return opt.default_chance
-        return self._chance.get(str(guild), opt.default_chance)
+            return default_chance
+        return self._chance.get(str(guild), default_chance)
 
     def set(self, guild: int, value: float):
         if not (0 <= value <= 1):
@@ -68,7 +89,7 @@ class ChanceManager:
         self.__dump()
 
 
-joke_chance = ChanceManager(Path(opt.chance_dir))
+joke_chance = ChanceManager(Path(chance_dir))
 
 joke_prefix = r"(?:i(?:['`´]| a)?|a)m "
 
@@ -111,7 +132,7 @@ async def on_ready():
 
 
 try:
-    bot.run(keys.discord_token)
+    bot.run(discord_token)
 
 except discord.LoginFailure as ex:
     # Miscellaneous authentications errors: borked token and co

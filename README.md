@@ -24,6 +24,24 @@
 *For advanced usage of the makefile and run script, refer to the documentation in [0x5c/quick-bot-no-pain](https://github.com/0x5c/quick-bot-no-pain).*
 
 
+### Fileless config
+
+Dadbot can get the Discord token and its configuration from environment instead of `keys.py` and `options.py`. It will only use environemnt if all the config keys from a file are passed in the environment instead. Doing so will fully disable loading the related config file.
+
+```shell
+# keys.py
+DADBOT_DISCORD_TOKEN=token
+
+# options.py
+DADBOT_COMMAND_PREFIX="dadctl :Dadctl "
+DADBOT_CHANCE_DIR="./data"
+DADBOT_DEFAULT_CHANCE=0.25
+```
+
+To pass multiple command prefixes (a list in `options.py`), pass them as a colon-separated (`:`) string.  
+eg: `DADBOT_COMMAND_PREFIX="dadctl :Dadctl :?:d!"`
+
+
 ## Docker
 
 *Refer to instructions [here](./README-DOCKER.md).*
